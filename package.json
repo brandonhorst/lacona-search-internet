@@ -1,0 +1,41 @@
+{
+  "name": "SearchInternet",
+  "version": "0.0.1",
+  "description": "Lacona App command to search the internet",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "clean": "rimraf lib",
+    "prepublish": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandonhorst/LaconaCommand-SearchInternet.git"
+  },
+  "keywords": [
+    "LaconaCommand",
+    "search",
+    "internet",
+    "web",
+    "google",
+    "bing",
+    "yahoo",
+    "amazon"
+  ],
+  "author": "@brandonhorst",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brandonhorst/LaconaCommand-SearchInternet/issues"
+  },
+  "homepage": "https://github.com/brandonhorst/LaconaCommand-SearchInternet",
+  "dependencies": {
+    "lacona-phrase": "^0.3.0",
+    "lacona-phrase-freetext": "^0.6.0",
+    "open": "0.0.5"
+  },
+  "devDependencies": {
+    "lacona": "0.x",
+    "babel": "^4.6.6",
+    "rimraf": "^2.2.8"
+  }
+}
