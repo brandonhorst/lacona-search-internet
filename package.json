@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/brandonhorst/lacona-command-search-internet",
   "dependencies": {
+    "lacona-command-config": "0.0.1",
     "lacona-phrase": "^0.7.0",
     "lacona-phrase-string": "^0.1.0",
     "lodash": "^3.10.1"
