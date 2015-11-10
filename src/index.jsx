@@ -2,7 +2,7 @@
 import _ from 'lodash'
 import {createElement, Phrase} from 'lacona-phrase'
 import String from 'lacona-phrase-string'
-import Config from 'LaconaCommand-Config'
+import Config from 'lacona-command-config'
 
 class SearchEngines extends Phrase {
   source () {
