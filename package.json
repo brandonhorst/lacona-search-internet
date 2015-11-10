@@ -1,8 +1,8 @@
 {
-  "name": "SearchInternet",
+  "name": "lacona-command-search-internet",
   "version": "0.1.0",
   "description": "Lacona App command to search the internet",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
     "clean": "rimraf lib",
@@ -10,10 +10,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/brandonhorst/LaconaCommand-SearchInternet.git"
+    "url": "https://github.com/brandonhorst/lacona-command-search-internet.git"
   },
   "keywords": [
-    "LaconaCommand",
+    "lacona",
+    "command",
     "search",
     "internet",
     "web",
@@ -25,17 +26,17 @@
   "author": "@brandonhorst",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/brandonhorst/LaconaCommand-SearchInternet/issues"
+    "url": "https://github.com/brandonhorst/lacona-command-search-internet/issues"
   },
-  "homepage": "https://github.com/brandonhorst/LaconaCommand-SearchInternet",
+  "homepage": "https://github.com/brandonhorst/lacona-command-search-internet",
   "dependencies": {
-    "lacona-phrase": "^0.3.0",
-    "lacona-phrase-freetext": "^0.6.0",
-    "open": "0.0.5"
+    "lacona-phrase": "^0.7.0",
+    "lacona-phrase-string": "^0.1.0",
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
-    "lacona": "0.x",
-    "babel": "^4.6.6",
-    "rimraf": "^2.2.8"
+    "babel": "^5.8.29",
+    "lacona": "^0.29.0",
+    "rimraf": "^2.4.3"
   }
 }
