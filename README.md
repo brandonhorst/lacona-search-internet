@@ -1,2 +1,2 @@
-# LaconaCommand-SearchInternet
-Lacona App command to search the internet
+# lacona-command-search-internet
+Lacona command to open web searches
