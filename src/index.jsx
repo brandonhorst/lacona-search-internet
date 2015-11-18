@@ -2,17 +2,17 @@
 import _ from 'lodash'
 import {createElement, Phrase} from 'lacona-phrase'
 import String from 'lacona-phrase-string'
-import Config from 'lacona-command-config'
+import {Config} from 'lacona-command-config'
 
 class SearchEngines extends Phrase {
   source () {
-    return {config: <Config />}
+    return {config: <Config key='webSearch' />}
   }
 
   describe () {
-    if (!this.sources.config.data.webSearch) return null
+    if (!this.sources.config.data) return null
 
-    const choices = this.sources.config.data.webSearch.searchEngines.map(engine => <literal text={engine.name} value={engine.url} />)
+    const choices = this.sources.config.data.searchEngines.map(engine => <literal text={engine.name} value={engine.url} />)
 
     return (
       <repeat unique={true} separator={<list items={[' and ', ', and ', ', ']} limit={1} />}>
@@ -61,6 +61,10 @@ export class Sentence extends Phrase {
       </choice>
     )
   }
+}
+
+export default {
+  sentences: [{Sentence, execute}]
 }
 
 // export default {
