@@ -12,7 +12,7 @@ class SearchEngines extends Phrase {
   describe () {
     if (!this.sources.config.data) return null
 
-    const choices = this.sources.config.data.searchEngines.map(engine => <literal text={engine.name} value={engine.url} />)
+    const choices = this.sources.config.data.searchEngines.map(engine => <literal text={engine.name} value={engine} />)
 
     return (
       <repeat unique={true} separator={<list items={[' and ', ', and ', ', ']} limit={1} />}>
@@ -32,7 +32,7 @@ class Query extends Phrase {
 
 export function execute (result) {
   const query = encodeURI(result.query)
-  _.forEach(result.urls, url => {
+  _.forEach(result.engines, ({url}) => {
     global.openURL(url.replace('{0}', query))
   })
 }
@@ -43,7 +43,7 @@ export class Sentence extends Phrase {
       <choice limit={1}>
         <sequence>
           <literal text='search ' category='action' />
-          <SearchEngines id='urls' />
+          <SearchEngines id='engines' />
           <literal text=' for ' />
           <Query id='query' />
         </sequence>
@@ -56,7 +56,7 @@ export class Sentence extends Phrase {
             <literal text=' with ' />
             <literal text=' using ' />
           </choice>
-          <SearchEngines id='urls' />
+          <SearchEngines id='engines' />
         </sequence>
       </choice>
     )
