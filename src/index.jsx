@@ -1,24 +1,61 @@
 /** @jsx createElement */
 import _ from 'lodash'
-import {createElement, Phrase} from 'lacona-phrase'
-import String from 'lacona-phrase-string'
-import {Config} from 'lacona-command-config'
+import { createElement, Phrase, Source } from 'lacona-phrase'
+import { String } from 'lacona-phrase-string'
+import { openURL, fetchSearchEngines } from 'lacona-api'
+import { Command } from 'lacona-command'
 
-class SearchEngines extends Phrase {
-  source () {
-    return {config: <Config key='webSearch' />}
+function andify (array, separator = ',') {
+  if (array.length === 1) {
+    return [
+      {text: 'a '},
+      {text: array[0].name, argument: 'search engine'},
+      {text: ' search'}
+    ]
+  } else {
+    return _.chain(array)
+      .slice(0, -2)
+      .map(item => [{text: item.name, argument: 'search engine'}, {text: ', '}])
+      .flatten()
+      .concat({text: _.slice(array, -2, -1)[0].name, argument: 'search engine'})
+      .concat({text: ' and '})
+      .concat({text: _.slice(array, -1)[0].name, argument: 'search engine'})
+      .concat({text: ' searches'})
+      .value()
+  }
+}
+
+class SearchEngines extends Source {
+  onCreate () {
+    this.onActivate()
+  }
+
+  onActivate () {
+    fetchSearchEngines((err, engines) => {
+      if (err) {
+        console.error(err)
+      } else {
+        this.setData(engines)
+      }
+    })
+  }
+}
+
+class SearchEngine extends Phrase {
+  observe () {
+    return <SearchEngines />
+  //   return <Config key='webSearch' />
   }
 
   describe () {
-    if (!this.sources.config.data) return null
-
-    const choices = this.sources.config.data.searchEngines.map(engine => <literal text={engine.name} value={engine} />)
+    // const searchEngines = this.source.data ? this.source.data.searchEngines : []
+    const engineItems = _.map(this.source.data, engine => ({text: engine.name, value: engine}))
 
     return (
-      <repeat unique={true} separator={<list items={[' and ', ', and ', ', ']} limit={1} />}>
-        <argument text='search engine'>
-          <choice>{choices}</choice>
-        </argument>
+      <repeat unique separator={<list items={[' and ', ', and ', ', ']} limit={1} category='conjunction' />}>
+        <label text='search engine' suppressEmpty={false}>
+          <list items={engineItems} limit={10} fuzzy />
+        </label>
       </repeat>
     )
   }
@@ -30,54 +67,57 @@ class Query extends Phrase {
   }
 }
 
-export function execute (result) {
-  const query = encodeURI(result.query)
-  _.forEach(result.engines, ({url}) => {
-    global.openURL(url.replace('{0}', query))
-  })
+class CommandObject {
+  constructor ({query, engines}) {
+    this.query = query
+    this.engines = engines
+  }
+
+  execute () {
+    const query = encodeURIComponent(this.query)
+    _.forEach(this.engines, ({url}) => {
+      const trueURL = url.replace('${query}', query)
+      openURL({url: trueURL})
+    })
+  }
+
+  _demoExecute () {
+    return _.flatten([
+      {text: 'open ', category: 'action'},
+      andify(this.engines),
+      {text: ' for ' },
+      {text: this.query, argument: 'query'},
+      {text: ' in '},
+      {text: 'the default web browser', argument: 'application'}
+    ])
+  }
 }
 
-export class Sentence extends Phrase {
+export class SearchInternet extends Phrase {
+  static extends = [Command]
+
   describe () {
     return (
-      <choice limit={1}>
-        <sequence>
-          <literal text='search ' category='action' />
-          <SearchEngines id='engines' />
-          <literal text=' for ' />
-          <Query id='query' />
-        </sequence>
-        <sequence>
-          <literal text='search ' category='action' />
-          <literal text='for ' category='conjunction' optional={true} />
-          <Query id='query' />
-          <choice limit={1} category='conjunction'>
-            <literal text=' on ' />
-            <literal text=' with ' />
-            <literal text=' using ' />
-          </choice>
-          <SearchEngines id='engines' />
-        </sequence>
-      </choice>
+      <map function={result => new CommandObject(result)}>
+        <choice limit={1}>
+          <sequence>
+            <literal text='search ' category='action' />
+            <SearchEngine id='engines' />
+            <literal text=' ' score={1000} />
+            <literal text='for ' decorate />
+            <Query id='query' />
+          </sequence>
+          <sequence>
+            <literal text='search ' category='action' />
+            <literal text='for ' category='conjunction' optional limited prefered />
+            <Query id='query' />
+            <list items={[' on ', ' with ', ' using ']} category='conjunction' limit={1} />
+            <SearchEngine id='engines' />
+          </sequence>
+        </choice>
+      </map>
     )
   }
 }
 
-export default {
-  sentences: [{Sentence, execute}]
-}
-
-// export default {
-//   config: config,
-//   sentences: [
-//     SearchInternet
-//   ],
-//   translations: [{
-//     langs: ['en', 'default'],
-//     information: {
-//       title: 'Search Internet',
-//       description: 'Search various search engines',
-//       examples: ['search Google for pictures of cats', 'search for Red Sox on Yahoo']
-//     }
-//   }]
-// }
+export const extensions = [SearchInternet]
