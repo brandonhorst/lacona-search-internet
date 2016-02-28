@@ -2,7 +2,7 @@
 import _ from 'lodash'
 import { createElement, Phrase, Source } from 'lacona-phrase'
 import { String } from 'lacona-phrase-string'
-import { openURL, fetchSearchEngines } from 'lacona-api'
+import { openURL, fetchSearchEngines, Config } from 'lacona-api'
 import { Command } from 'lacona-command'
 
 function andify (array, separator = ',') {
@@ -25,35 +25,18 @@ function andify (array, separator = ',') {
   }
 }
 
-class SearchEngines extends Source {
-  onCreate () {
-    this.onActivate()
-  }
-
-  onActivate () {
-    fetchSearchEngines((err, engines) => {
-      if (err) {
-        console.error(err)
-      } else {
-        this.setData(engines)
-      }
-    })
-  }
-}
-
 class SearchEngine extends Phrase {
   observe () {
-    return <SearchEngines />
-  //   return <Config key='webSearch' />
+    return <Config property='webSearch' />
   }
 
   describe () {
     // const searchEngines = this.source.data ? this.source.data.searchEngines : []
-    const engineItems = _.map(this.source.data, engine => ({text: engine.name, value: engine}))
+    const engineItems = _.map(this.source.data.searchEngines, engine => ({text: engine.name, value: engine}))
 
     return (
       <repeat unique separator={<list items={[' and ', ', and ', ', ']} limit={1} category='conjunction' />}>
-        <label text='search engine' suppressEmpty={false}>
+        <label text='search engine' suppressEmpty={false} suppress={this.props.suppress}>
           <list items={engineItems} limit={10} fuzzy />
         </label>
       </repeat>
@@ -103,7 +86,7 @@ export class SearchInternet extends Phrase {
           <sequence>
             <literal text='search ' category='action' />
             <SearchEngine id='engines' />
-            <literal text=' ' score={1000} />
+            <literal text=' ' />
             <literal text='for ' decorate />
             <Query id='query' />
           </sequence>
@@ -111,7 +94,7 @@ export class SearchInternet extends Phrase {
             <literal text='search ' category='action' />
             <literal text='for ' category='conjunction' optional limited prefered />
             <Query id='query' />
-            <list items={[' on ', ' with ', ' using ']} category='conjunction' limit={1} />
+            <list items={[' on ', ' with ', ' using ']} category='conjunction' limit={1} score={100} />
             <SearchEngine id='engines' />
           </sequence>
         </choice>
