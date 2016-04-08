@@ -31,10 +31,10 @@
   },
   "homepage": "https://github.com/laconalabs/lacona-search-internet",
   "dependencies": {
-    "elliptical": "^1.0.0-rc9",
+    "elliptical": "^1.0.0-rc10",
     "elliptical-string": "^1.0.0-rc2",
-    "lacona-api": "0.1.0",
-    "lacona-command": "^0.2.0",
+    "lacona-api": "0.1.1",
+    "lacona-command": "^0.2.1",
     "lodash": "^4.9.0"
   },
   "devDependencies": {
