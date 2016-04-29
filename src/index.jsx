@@ -17,7 +17,7 @@ const SearchEngine = {
     return (
       <repeat unique separator={<list items={[' and ', ', and ', ', ']} limit={1} category='conjunction' />}>
         <label text='search engine' suppressEmpty={false}> 
-          <list items={engineItems} limit={10} fuzzy />
+          <list items={engineItems} limit={10} strategy='fuzzy' />
         </label>
       </repeat>
     )
