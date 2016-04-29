@@ -49,12 +49,12 @@ export const SearchInternet = {
           <literal text='search ' category='action' />
           <SearchEngine id='engines' />
           <literal text=' ' />
-          <literal text='for ' decorate />
+          <literal text='for ' decorate optional limited preferred />
           <Query id='query' />
         </sequence>
         <sequence>
           <literal text='search ' category='action' />
-          <literal text='for ' category='conjunction' optional limited prefered />
+          <literal text='for ' category='conjunction' optional limited preferred />
           <Query id='query' />
           <list items={[' on ', ' with ', ' using ']} category='conjunction' limit={1} score={100} />
           <SearchEngine id='engines' />
