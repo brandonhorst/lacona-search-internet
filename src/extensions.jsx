@@ -1,9 +1,9 @@
 /** @jsx createElement */
 import _ from 'lodash'
+
 import { createElement } from 'elliptical'
-import { String } from 'elliptical-string'
+import { String, Command } from 'lacona-phrases'
 import { openURL } from 'lacona-api'
-import { Command } from 'lacona-command'
 
 import demoExecute from './demo'
 
@@ -64,4 +64,4 @@ export const SearchInternet = {
   }
 }
 
-export const extensions = [SearchInternet]
+export default [SearchInternet]

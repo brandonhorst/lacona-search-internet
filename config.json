@@ -1,0 +1,130 @@
+{
+  "webSearch": {
+    "type": "object",
+    "properties": {
+      "searchEngines": {
+        "type": "array",
+        "description": "${query} will be replaced with the search query.",
+        "format": "table",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "size": 2,
+              "default": ""
+            },
+            "url": {
+              "type": "string",
+              "title": "URL",
+              "size": 6,
+              "default": ""
+            }
+          },
+          "default": {
+            "name": "",
+            "url": ""
+          }
+        },
+        "default": [
+          {
+            "name": "Google",
+            "url": "https://www.google.com/search?q=${query}"
+          },
+          {
+            "name": "Google Images",
+            "url": "https://www.google.com/search?q=${query}&tbm=isch"
+          },
+          {
+            "name": "Google Maps",
+            "url": "https://www.google.com/maps?q=${query}"
+          },
+          {
+            "name": "Gmail",
+            "url": "https://www.google.com/search?q=${query}"
+          },
+          {
+            "name": "Google Mail",
+            "url": "http://mail.google.com/mail/u/0/#search/${query}"
+          },
+          {
+            "name": "Google Inbox",
+            "url": "https://inbox.google.com/search/${query}"
+          },
+          {
+            "name": "Google Drive",
+            "url": "https://drive.google.com/drive/u/0/#search?q=${query}"
+          },
+          {
+            "name": "Maps",
+            "url": "http://maps.apple.com/?q=${query}"
+          },
+          {
+            "name": "Twitter",
+            "url": "https://twitter.com/search?q=${query}"
+          },
+          {
+            "name": "Facebook",
+            "url": "https://www.facebook.com/search/results.php?q=${query}"
+          },
+          {
+            "name": "LinkedIn",
+            "url": "https://www.linkedin.com/vsearch/p?keywords=${query}"
+          },
+          {
+            "name": "Youtube",
+            "url": "https://www.youtube.com/results?search_query=${query}"
+          },
+          {
+            "name": "Wikipedia",
+            "url": "https://wikipedia.org/wiki/Special:Search/${query}"
+          },
+          {
+            "name": "Amazon",
+            "url": "http://www.amazon.com/s?url=search-alias=aps&field-keywords=${query}&tag=lacona-20"
+          },
+          {
+            "name": "eBay",
+            "url": "http://shop.ebay.com/?_nkw=${query}"
+          },
+          {
+            "name": "IMDb",
+            "url": "http://www.imdb.com/find?s=all&q=${query}"
+          },
+          {
+            "name": "Rotten Tomatoes",
+            "url": "http://www.rottentomatoes.com/search/?search=${query}"
+          },
+          {
+            "name": "Bing",
+            "url": "http://www.bing.com/search?q=${query}"
+          },
+          {
+            "name": "Yahoo",
+            "url": "https://search.yahoo.com/search?p=${query}"
+          },
+          {
+            "name": "Ask",
+            "url": "http://www.ask.com/web?q=${query}"
+          },
+          {
+            "name": "Flickr",
+            "url": "https://www.flickr.com/search/?q=${query}&w=all"
+          },
+          {
+            "name": "Wolfram|Alpha",
+            "url": "http://www.wolframalpha.com/input/?i=${query}"
+          },
+          {
+            "name": "Yubnub",
+            "url": "http://www.yubnub.org/parser/parse?command=${query}"
+          },
+          {
+            "name": "DuckDuckGo",
+            "url": "https://duckduckgo.com/?q=${query}"
+          }
+        ]
+      }
+    }
+  }
+}
