@@ -1,6 +1,6 @@
 {
   "name": "lacona-search-internet",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lacona App command to search the internet",
   "lacona": {
     "extensions": "build/extensions.js",
