@@ -8,9 +8,9 @@ import { openURL } from 'lacona-api'
 import demoExecute from './demo'
 
 const SearchEngine = {
-  describe ({context}) {
+  describe ({config}) {
     const engineItems = _.map(
-      context.config.webSearch.searchEngines,
+      config.webSearch.searchEngines,
       engine => ({text: engine.name, value: engine})
     )
 
