@@ -2,15 +2,13 @@
   "name": "lacona-search-internet",
   "version": "0.2.1",
   "description": "Lacona App command to search the internet",
-  "lacona": {
-    "extensions": "build/extensions.js",
-    "config": "config.json"
-  },
   "scripts": {
-    "build:build": "mkdir -p build; browserify src/extensions.jsx -t babelify -o build/extensions.js -x lacona-phrases -x elliptical -x lacona-api --standalone extensions --extension=jsx",
-    "build:lib": "babel src --out-dir lib",
-    "clean": "rimraf build lib",
-    "prepublish": "npm run clean && npm run build:build && npm run build:lib"
+    "build": "babel src --out-dir lib",
+    "clean": "rimraf build",
+    "prepublish": "npm run clean && npm run build"
+  },
+  "lacona": {
+    "config": "config.json"
   },
   "repository": {
     "type": "git",
@@ -34,14 +32,15 @@
   },
   "homepage": "https://github.com/laconalabs/lacona-search-internet",
   "dependencies": {
+    "elliptical": "^1.0.0-rc15",
+    "lacona-api": "^0.6.2",
+    "lacona-phrases": "^0.7.0",
     "lodash": "^4.13.1"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
-    "babelify": "^7.3.0",
-    "browserify": "^13.0.1",
     "rimraf": "^2.5.2"
   },
   "babel": {
