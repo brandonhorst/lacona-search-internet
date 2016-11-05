@@ -1,6 +1,6 @@
 {
   "name": "lacona-search-internet",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Lacona App command to search the internet",
   "scripts": {
     "build": "babel src --out-dir lib",
