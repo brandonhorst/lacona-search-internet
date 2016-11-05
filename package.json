@@ -8,7 +8,9 @@
     "prepublish": "npm run clean && npm run build"
   },
   "lacona": {
-    "config": "config.json"
+    "title": "Search Internet",
+    "customPreferences": true,
+    "description": "Search the internet using any search engine."
   },
   "repository": {
     "type": "git",

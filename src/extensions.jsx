@@ -8,9 +8,9 @@ import { openURL } from 'lacona-api'
 import demoExecute from './demo'
 
 const SearchEngine = {
-  describe ({config}) {
+  describe ({props}) {
     const engineItems = _.map(
-      config.webSearch.searchEngines,
+      props.engines,
       engine => ({text: engine.name, value: engine})
     )
 
@@ -25,8 +25,8 @@ const SearchEngine = {
 }
 
 const Query = {
-  describe () {
-    return <String limit={1} argument='query' />
+  describe ({props}) {
+    return <String limit={1} label='query' splitOn={/\s/} {...props} />
   }
 }
 
@@ -42,22 +42,24 @@ export const SearchInternet = {
   },
   demoExecute,
 
-  describe () {
+  describe ({config}) {
+    if (!config.searchEnabled) return
+
     return (
       <choice limit={1}>
         <sequence>
-          <literal text='search ' category='action' />
-          <SearchEngine id='engines' />
+          <literal text='search ' />
+          <SearchEngine id='engines' engines={config.searchEngines} />
           <literal text=' ' />
           <literal text='for ' decorate optional limited preferred />
-          <Query id='query' />
+          <Query id='query' consumeAll />
         </sequence>
         <sequence>
-          <literal text='search ' category='action' />
-          <literal text='for ' category='conjunction' optional limited preferred />
+          <literal text='search ' />
+          <literal text='for ' optional limited preferred />
           <Query id='query' />
-          <list items={[' on ', ' with ', ' using ']} category='conjunction' limit={1} score={100} />
-          <SearchEngine id='engines' />
+          <list items={[' on ', ' with ', ' using ']} limit={1} score={100} />
+          <SearchEngine id='engines' engines={config.searchEngines} />
         </sequence>
       </choice>
     )
