@@ -3,7 +3,7 @@
     "type": "header",
     "examples": [
       "search [Google](search engine) for [Lacona](query)",
-      "search [eBay](search engine) and [Amazon](search engine) for [The Avengers](query)",
+      "search [Facebook](search engine) and [Twitter](search engine) for [The Avengers](query)",
       "[Google Maps](search engine) [Boston MA](query)"
     ]
   },
